@@ -1,0 +1,15 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+
+[dev-packages]
+twine = "*"
+
+[requires]
+python_version = "3.9"
+
+[scripts]
+deploy = "rm -rf dist && python3 setup.py sdist bdist_wheel && twine check dist/*" 
