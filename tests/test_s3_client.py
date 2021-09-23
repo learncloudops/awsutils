@@ -1,5 +1,4 @@
 from tempfile import NamedTemporaryFile
-from awsutils.services import S3Client
 
 import pytest
 from awsutils.services import S3Client

@@ -18,5 +18,5 @@ coverage = "*"
 python_version = "3.8"
 
 [scripts]
-test="python -m pytest -v"
+test="python -m pytest -v --capture=sys"
 coverage="coverage run -m pytest -v"

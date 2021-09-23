@@ -1,4 +1,0 @@
-
-
-class EventBridgeClient(object):
-    pass

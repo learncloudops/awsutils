@@ -1,7 +1,7 @@
 import pytest
 import os
 import boto3
-from moto import mock_s3
+from moto import mock_s3, mock_events
 
 
 @pytest.fixture
@@ -16,4 +16,11 @@ def aws_credentials():
 def s3_client(aws_credentials):
   with mock_s3():
     conn = boto3.client('s3', region_name='us-east-1')
+    yield conn
+
+
+@pytest.fixture
+def events_client(aws_credentials):
+  with mock_events():
+    conn = boto3.client('events', region_name='us-east-1')
     yield conn
