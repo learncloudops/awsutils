@@ -100,10 +100,30 @@ def test_download_object_local_file_not_null(s3_client, s3_test):
 
 
 def test_put_object(s3_client, s3_test):
-  s3_client.put_object(Bucket=BUCKET_NAME, Key='bucket_file.txt', Body='yo')
-  s3_client.download_file(Bucket=BUCKET_NAME, Key='bucket_file.txt', 
-                          Filename='/tmp/bucket_file.txt' )
-  os.path.isfile('/tmp/bucket_file.txt')
-  with open('/tmp/bucket_file.txt') as tmp:
-    f = tmp.readlines()
-    assert f == ['yo']
+  file_body = 'test'
+  s3 = S3Client()
+  with NamedTemporaryFile(delete=True, suffix='.txt') as tmp:
+    with open(tmp.name, 'w', encoding='UTF-8') as f:
+      f.write(file_body)
+      s3.put_object(bucket_name=BUCKET_NAME, key='files/bucket_file.txt', local_file=f.name )
+    
+    names = s3.list_object_names(bucket_name=BUCKET_NAME, prefix='files')
+    assert names == ['files/bucket_file.txt']
+
+
+def test_put_object_bucket_name_none(s3_client, s3_test):
+  s3 = S3Client()
+  with pytest.raises(ValueError):
+    s3.put_object(bucket_name=None, key='aa', local_file='aa')
+
+
+def test_put_object_key_is_none(s3_client, s3_test):
+  s3 = S3Client()
+  with pytest.raises(ValueError):
+    s3.put_object(bucket_name='aa', key=None, local_file='aa')
+
+
+def test_put_object_local_file(s3_client, s3_test):
+  s3 = S3Client()
+  with pytest.raises(ValueError):
+    s3.put_object(bucket_name='aa', key='aa', local_file=None)

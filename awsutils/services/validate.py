@@ -10,7 +10,8 @@ class Validate:
 
 
   @staticmethod
-  def not_empty(object: Any, err_msg: str = 'the value cannot be None') -> None:
+  def not_empty(object: str, err_msg: str = 'the value cannot be None') -> None:
     Validate.not_null(object, err_msg)
-    if not isinstance(object,Number) and len(object) == 0:
+    object = object.strip()
+    if len(object) == 0:
       raise ValueError(err_msg)
