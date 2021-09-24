@@ -9,7 +9,7 @@ README = (HERE / "README.md").read_text()
 
 setup(
     name="learncloudops-utils",
-    version="1.0.1",
+    version="1.0.2",
     description="Useful OO abstractions for building aws cloud apps in Python",
     long_description_content_type="text/markdown",
     long_description=README,
